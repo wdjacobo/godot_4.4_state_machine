@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://dfpteq7dnwdhf"]
+
+[ext_resource type="Script" uid="uid://knomy4do3q3i" path="res://scripts/world.gd" id="1_gb1h0"]
+[ext_resource type="PackedScene" uid="uid://bxiqv6bt7v4e3" path="res://scenes/landscape.tscn" id="1_nw52t"]
+[ext_resource type="PackedScene" uid="uid://d218m3l6klcb4" path="res://scenes/platform.tscn" id="4_chvpq"]
+[ext_resource type="PackedScene" uid="uid://cd4k4gk8w733" path="res://scenes/gbc_shield.tscn" id="5_f6isf"]
+[ext_resource type="PackedScene" uid="uid://0ly4at27itsc" path="res://scenes/player/fsm_advanced/player_fsm_advanced.tscn" id="6_52rxx"]
+[ext_resource type="Script" uid="uid://dbubacfqo42ah" path="res://scripts/game_controller.gd" id="7_s7ewg"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_aatou"]
+
+[node name="World" type="Node2D"]
+position = Vector2(261, -14)
+script = ExtResource("1_gb1h0")
+
+[node name="Landscape" parent="." instance=ExtResource("1_nw52t")]
+position = Vector2(558, 423)
+
+[node name="WorldBoundaries" type="Node" parent="."]
+
+[node name="Left" type="StaticBody2D" parent="WorldBoundaries"]
+position = Vector2(-12, 475)
+scale = Vector2(8, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundaries/Left"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_aatou")
+
+[node name="Right" type="StaticBody2D" parent="WorldBoundaries"]
+position = Vector2(1650, 474)
+rotation = 3.14159
+scale = Vector2(8, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldBoundaries/Right"]
+rotation = 1.5708
+shape = SubResource("WorldBoundaryShape2D_aatou")
+
+[node name="Platforms" type="Node" parent="."]
+
+[node name="Platform" parent="Platforms" instance=ExtResource("4_chvpq")]
+position = Vector2(1381, 530)
+
+[node name="Platform2" parent="Platforms" instance=ExtResource("4_chvpq")]
+position = Vector2(899, 428)
+
+[node name="Platform3" parent="Platforms" instance=ExtResource("4_chvpq")]
+position = Vector2(448, 269)
+
+[node name="GbcShield" parent="Platforms" instance=ExtResource("5_f6isf")]
+position = Vector2(584, 500)
+
+[node name="PlayerFSMAdvanced" parent="." instance=ExtResource("6_52rxx")]
+position = Vector2(937, 579)
+
+[node name="Camera2D" type="Camera2D" parent="PlayerFSMAdvanced"]
+position = Vector2(0, -100)
+limit_left = 0
+limit_top = 0
+limit_right = 1635
+limit_bottom = 815
+
+[node name="GameController" type="Node" parent="."]
+script = ExtResource("7_s7ewg")
